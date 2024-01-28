@@ -242,9 +242,9 @@ async function getMealsDetails(id){
 }
 
 function displayMealsDetails(data) {
-    // if (data.strTags =="null") {
-    //     data.strTags = "No Tags Available"
-    // }
+    if (data.strTags == null) {
+        data.strTags = "No Tags Available"
+    }
 
     let recipes = ``;
     for (let i = 0; i <21; i++) {
@@ -309,222 +309,111 @@ function displayContactInputs() {
             <h2 class="text-capitalize mb-5 fs-1">contact us</h2>
             <div class="row gy-3 mb-3">
               <div class="col-md-6">
-                <input type="text" onkeyup=" submitVlidation()" name="name" class="form-control mb-2" id="userName" placeholder="Enter Your Name">
+                <input type="text" onkeyup=" nameValidation(); btnSubmit()" name="name" class="form-control mb-2" id="userName" placeholder="Enter Your Name">
                 <p id="nameAlert" class="text-danger text-center d-none">! special character and numbers not allowed</p>
               </div>
               <div class="col-md-6">
-                <input type="email" name="name" onkeyup="submitVlidation()" class="form-control mb-2" id="userEmail" placeholder="Enter Your Email">
+                <input type="email" name="name" onkeyup="emailValidation();btnSubmit()" class="form-control mb-2" id="userEmail" placeholder="Enter Your Email">
                 <p id="mailAlert" class="text-danger text-center d-none">! Email is not Valid (example@ghhh.com)</p>
               </div>
               <div class="col-md-6">
-                <input type="tel" name="name" onkeyup="submitVlidation()" class="form-control mb-2" id="userPhone" placeholder="Enter Your Phone">
+                <input type="tel" name="name" onkeyup="phoneValidation(); btnSubmit()" class="form-control mb-2" id="userPhone" placeholder="Enter Your Phone">
                 <p id="phoneAlert" class="text-danger text-center d-none">! Enter Valid Phone Number</p>
               </div>
               <div class="col-md-6">
-                <input type="number" onkeyup="submitVlidation()" name="name" class="form-control mb-2" id="userAge" placeholder="Enter Your Age">
+                <input type="number" onkeyup=" ageValidation(); btnSubmit()" name="name" class="form-control mb-2" id="userAge" placeholder="Enter Your Age">
                 <p id="ageAlert" class="text-danger text-center d-none">! Enter Valid Age</p>
               </div>
               <div class="col-md-6">
-                <input type="password" onkeyup="submitVlidation()" name="name" class="form-control mb-2" id="userPass" placeholder="Enter Your password">
+                <input type="password" onkeyup="passwordValidation(); btnSubmit()" name="name" class="form-control mb-2" id="userPass" placeholder="Enter Your password">
                 <p id="passAlert" class="text-danger text-center d-none">! your password must have minimum 8 character , at least one letter and one number</p>
               </div>
               <div class="col-md-6">
-                <input onkeyup="submitVlidation()" type="password"  name="name" class="form-control mb-2" id="userRePass" placeholder="Enter Your Name">
+                <input onkeyup="repasswordValidation(); btnSubmit()" type="password"  name="name" class="form-control mb-2" id="userRePass" placeholder="Enter Your Name">
                 <p id="repassAlert" class="text-danger text-center d-none">! your password not the same</p>
               </div>
             </div>
             <button id="btnSubmit" disabled class="btn btn-outline-danger p-2 px-3" >Submit</button>
           </div>
         </div>
-  `
-
-  document.getElementById("userName").addEventListener("focus", () => {
-    nameFocused = true
-})
-
-document.getElementById("userEmail").addEventListener("focus", () => {
-    emailFocused = true
-})
-
-document.getElementById("userPhone").addEventListener("focus", () => {
-    phoneFocused = true
-})
-
-document.getElementById("userAge").addEventListener("focus", () => {
-    ageFocused = true
-})
-
-document.getElementById("userPass").addEventListener("focus", () => {
-    passwordFocused = true
-})
-
-document.getElementById("userRePass").addEventListener("focus", () => {
-    repasswordFocused = true
-})
-}
-
-let nameFocused = false;
-let emailFocused = false;
-let phoneFocused = false;
-let ageFocused = false;
-let passwordFocused = false;
-let repasswordFocused = false;
-
-// if (nameValidation() && emailValidation() && phoneValidation() && ageValidation() && passwordValidation() && repasswordValidation()) {
-//   $("#btnSubmit").removeAttr("disabled")
-// }else {
-//   $("#btnSubmit").attr("disabled")
-// }
-
-
-// let userName = document.getElementById("userName");
-// let userEmail = document.getElementById("userEmail");
-// let userPhone = document.getElementById("userPhone");
-// let userAge = document.getElementById("userAge");
-// let userPass = document.getElementById("userPass");
-// let userRePass = document.getElementById("userRePass");
+  `}
 
 
 
-function submitVlidation() {
-  if (nameFocused) {
-    if (nameValidation()) {
-          $("#nameAlert").addClass("d-none")
+  function nameValidation() {
+    let regex= /^[a-zA-Z ]+$/;
+    if (regex.test(document.getElementById("userName").value)) {
+      $("#nameAlert").addClass("d-none")
+      return true ;
     }else {
-          $("#nameAlert").removeClass("d-none")
+      $("#nameAlert").removeClass("d-none")
+      return false
     }
-}
-if (emailFocused) {
-  if (emailValidation()) {
-    $("#mailAlert").addClass("d-none")
-}else {
-    $("#mailAlert").removeClass("d-none")
-}
-}
+  }
+  
+  function emailValidation() {
+    let regex=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (regex.test(document.getElementById("userEmail").value)) {
+      $("#mailAlert").addClass("d-none")
+      return true
+    }else {
+      $("#mailAlert").removeClass("d-none")
+      return false
+    }
+  }
+  
+  function phoneValidation() {
+    let regex=/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    if (regex.test(document.getElementById("userPhone").value)) {
+      $("#phoneAlert").addClass("d-none")
+      return true
+    }else {
+      $("#phoneAlert").removeClass("d-none")
+      return false
+    }
+  }
+  
+  function ageValidation() {
+    let regex=/^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$/;
+    if (regex.test(document.getElementById("userAge").value)) {
+      $("#ageAlert").addClass("d-none")
+      return true
+    }else {
+      $("#ageAlert").removeClass("d-none")
+      return false
+    }
+  }
+  
+  function passwordValidation() {
+    let regex=/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+    if (regex.test(document.getElementById("userPass").value)) {
+      $("#passAlert").addClass("d-none")
+      return true
+    }else {
+      $("#passAlert").removeClass("d-none")
+      return false
+    }
+  }
+  
+  function repasswordValidation() {
+     if (document.getElementById("userRePass").value == document.getElementById("userPass").value) {
+      $("#repassAlert").addClass("d-none")
+      return true
+     }else {
+      $("#repassAlert").removeClass("d-none")
+      return false
+     }
+  }
+  
 
-if (phoneFocused) {
-  if (phoneValidation()) {
-    $("#phoneAlert").addClass("d-none")
-}else {
-    $("#phoneAlert").removeClass("d-none")
-}
-}
 
-if (ageFocused) {
-  if (ageValidation()) {
-    $("#ageAlert").addClass("d-none")
-}else {
-    $("#ageAlert").removeClass("d-none")
-}
-}
-
-if (passwordFocused) {
-  if (passwordValidation()) {
-    $("#passAlert").addClass("d-none")
-}else {
-    $("#passAlert").removeClass("d-none")
-}
-}
-if (repasswordFocused) {
-  if (repasswordValidation()) {
-    $("#repassAlert").addClass("d-none")
-}else {
-    $("#repassAlert").removeClass("d-none")
-}
-}
-
-
-if (nameValidation() &&
-    emailValidation() &&
-    phoneValidation() &&
-    ageValidation() &&
-    passwordValidation() &&
-    repasswordValidation()) {
+  function btnSubmit() {
+    if (nameValidation() && emailValidation() && phoneValidation() && ageValidation() && passwordValidation() && repasswordValidation()) {
       document.getElementById("btnSubmit").removeAttribute("disabled")
-} else {
-  document.getElementById("btnSubmit").setAttribute("disabled", true)
-}
+    }else {
+      document.getElementById("btnSubmit").setAttribute("disabled")
+    }
+    
+  }
 
 
-}
-
-
-function nameValidation() {
-  return (/^[a-zA-Z ]+$/.test(document.getElementById("userName").value))
-}
-
-function emailValidation() {
-  return (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(document.getElementById("userEmail").value))
-}
-
-function phoneValidation() {
-  return (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(document.getElementById("userPhone").value))
-}
-
-function ageValidation() {
-  return (/^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$/.test(document.getElementById("userAge").value))
-}
-
-function passwordValidation() {
-  return (/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/.test(document.getElementById("userPass").value))
-}
-
-function repasswordValidation() {
-  return document.getElementById("userPass").value == document.getElementById("userRePass").value
-}
-
-
-
-
-// function nameValidation() {
-//   let regex= /^[a-zA-Z ]+$/;
-//   if (regex.test(document.getElementById("userName").value)==true) {
-//     $("#nameAlert").addClass("d-none")
-//   }else {
-//     $("#nameAlert").removeClass("d-none")
-//   }
-// }
-
-// function emailValidation() {
-//   let regex=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//   if (regex.test(document.getElementById("userEmail").value)==true) {
-//     $("#mailAlert").addClass("d-none")
-//   }else {
-//     $("#mailAlert").removeClass("d-none")
-//   }
-// }
-
-// function phoneValidation() {
-//   let regex=/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-//   if (regex.test(document.getElementById("userPhone").value)) {
-//     $("#phoneAlert").addClass("d-none")
-//   }else {
-//     $("#phoneAlert").removeClass("d-none")
-//   }
-// }
-
-// function ageValidation() {
-//   let regex=/^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$/;
-//   if (regex.test(document.getElementById("userAge").value)) {
-//     $("#ageAlert").addClass("d-none")
-//   }else {
-//     $("#ageAlert").removeClass("d-none")
-//   }
-// }
-
-// function passwordValidation() {
-//   let regex=/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
-//   if (regex.test(document.getElementById("userPass").value)) {
-//     $("#passAlert").addClass("d-none")
-//   }else {
-//     $("#passAlert").removeClass("d-none")
-//   }
-// }
-
-// function repasswordValidation() {
-//    if (document.getElementById("userRePass").value == document.getElementById("userPass").value) {
-//     $("#repassAlert").addClass("d-none")
-//    }else {
-//     $("#repassAlert").removeClass("d-none")
-//    }
-// }
