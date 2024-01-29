@@ -340,7 +340,16 @@ function displayContactInputs() {
 
 
 
+  let flag1 = false;
+  let flag2 = false;
+  let flag3 = false;
+  let flag4 = false;
+  let flag5 = false;
+  let flag6 = false;
+
+
   function nameValidation() {
+    flag1 = true ;
     let regex= /^[a-zA-Z ]+$/;
     if (regex.test(document.getElementById("userName").value)) {
       $("#nameAlert").addClass("d-none")
@@ -352,6 +361,7 @@ function displayContactInputs() {
   }
   
   function emailValidation() {
+    flag2 = true;
     let regex=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (regex.test(document.getElementById("userEmail").value)) {
       $("#mailAlert").addClass("d-none")
@@ -363,6 +373,7 @@ function displayContactInputs() {
   }
   
   function phoneValidation() {
+    flag3 = true;
     let regex=/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     if (regex.test(document.getElementById("userPhone").value)) {
       $("#phoneAlert").addClass("d-none")
@@ -374,6 +385,7 @@ function displayContactInputs() {
   }
   
   function ageValidation() {
+    flag4 = true;
     let regex=/^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$/;
     if (regex.test(document.getElementById("userAge").value)) {
       $("#ageAlert").addClass("d-none")
@@ -385,6 +397,7 @@ function displayContactInputs() {
   }
   
   function passwordValidation() {
+    flag5 = true;
     let regex=/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
     if (regex.test(document.getElementById("userPass").value)) {
       $("#passAlert").addClass("d-none")
@@ -396,6 +409,7 @@ function displayContactInputs() {
   }
   
   function repasswordValidation() {
+    flag6 = true;
      if (document.getElementById("userRePass").value == document.getElementById("userPass").value) {
       $("#repassAlert").addClass("d-none")
       return true
@@ -408,11 +422,14 @@ function displayContactInputs() {
 
 
   function btnSubmit() {
-    if (nameValidation() && emailValidation() && phoneValidation() && ageValidation() && passwordValidation() && repasswordValidation()) {
-      document.getElementById("btnSubmit").removeAttribute("disabled")
-    }else {
-      document.getElementById("btnSubmit").setAttribute("disabled")
+    if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6) {
+      if (nameValidation() && emailValidation() && phoneValidation() && ageValidation() && passwordValidation() && repasswordValidation()) {
+        document.getElementById("btnSubmit").removeAttribute("disabled")
+      }else {
+        document.getElementById("btnSubmit").setAttribute("disabled", true)
+      }
     }
+    
     
   }
 
